@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/prnt-ui-poc/static/css/main.aa918fe1.css",
-    "main.js": "/prnt-ui-poc/static/js/main.8c61d989.js",
+    "main.js": "/prnt-ui-poc/static/js/main.b62411de.js",
     "index.html": "/prnt-ui-poc/index.html",
     "main.aa918fe1.css.map": "/prnt-ui-poc/static/css/main.aa918fe1.css.map",
-    "main.8c61d989.js.map": "/prnt-ui-poc/static/js/main.8c61d989.js.map"
+    "main.b62411de.js.map": "/prnt-ui-poc/static/js/main.b62411de.js.map"
   },
   "entrypoints": [
     "static/css/main.aa918fe1.css",
-    "static/js/main.8c61d989.js"
+    "static/js/main.b62411de.js"
   ]
 }
