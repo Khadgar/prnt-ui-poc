@@ -4,7 +4,7 @@ import AppContext from "../contexts/AppContext";
 import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
