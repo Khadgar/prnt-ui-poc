@@ -1,12 +1,6 @@
 import React, { FC, useContext, useState } from "react";
 import styled from "styled-components";
 import AppContext from "../contexts/AppContext";
-import { Configuration, OpenAIApi } from "openai";
-
-const configuration = new Configuration({
-  apiKey: "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",
-});
-const openai = new OpenAIApi(configuration);
 
 const PrecerencesContainer = styled.div`
   display: flex;
@@ -78,34 +72,38 @@ const Preferences: FC = () => {
   const handleGenerate = () => {
     (async () => {
       setLoading(true);
-      const completion = await openai.createCompletion({
-        model: "text-davinci-003",
-        max_tokens: 150,
-        prompt: `Make an image description from the following properties. style:${selectedStyles.join(
-          ", "
-        )} subject: ${selectedThemes.join(
-          ", "
-        )} and technique: ${selectedTechniques.join(", ")}`,
-        temperature: 0.6,
-      });
-      const imgDescription = completion.data.choices[0].text;
-      generateImage(imgDescription);
+
+      const data = {
+        style: selectedStyles.join(", "),
+        subject: selectedThemes.join(", "),
+        technique: selectedTechniques.join(", "),
+      };
+
+      fetch(
+        "https://prnt-server.netlify.app/.netlify/functions/artistic-preference",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setResult(data.image);
+          setNewImageDescription(data.imgDescription);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+
+      setLoading(false);
     })();
   };
 
-  const generateImage = async (description: string | undefined) => {
-    if (description) {
-      const res = await openai.createImage({
-        prompt: description,
-        n: 1,
-        size: "256x256",
-      });
-      setResult(res.data.data[0].url);
-      setNewImageDescription(description);
-      setLoading(false);
-    }
-  };
   if (loading) return <span>Loading</span>;
+
   return (
     <PrecerencesContainer>
       <h2>Your art will have the following properties</h2>
