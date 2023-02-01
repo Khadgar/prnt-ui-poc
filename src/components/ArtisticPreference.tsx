@@ -2,7 +2,8 @@ import { FC, useContext } from "react";
 import styled from "styled-components";
 import AppContext, { ImageMetadata } from "../contexts/AppContext";
 import { arrayRotate } from "../utils/Utils";
-import { Stack, Button, Card, CardContent } from "@mui/material";
+import { Stack, Button, Card, CardContent, IconButton } from "@mui/material";
+import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Add } from "@mui/icons-material";
 
 const CARD_HEIGHT = 300;
@@ -63,13 +64,9 @@ const ArtisticPreference: FC = () => {
         <Stack spacing={2}>
           <ArtisticPreferenceWrapper
             spacing={2}
-            direction="row"
             alignItems="center"
             justifyContent="center"
           >
-            <Button variant="outlined" onClick={showPrevArt}>
-              Previous Art
-            </Button>
             <CardContainer direction="column">
               {images.map((img: ImageMetadata, index: number) => (
                 <ImageCard
@@ -80,14 +77,30 @@ const ArtisticPreference: FC = () => {
                 ></ImageCard>
               ))}
             </CardContainer>
-            <Button variant="outlined" onClick={showNextArt}>
-              Next Art
-            </Button>
           </ArtisticPreferenceWrapper>
           <Stack direction="row" justifyContent="center" spacing={2}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+              onClick={showPrevArt}
+            >
+              <ArrowBack />
+            </IconButton>
+            <IconButton
+              edge="start"
+              color="inherit"
+              sx={{ mr: 2 }}
+              onClick={showNextArt}
+            >
+              <ArrowForward />
+            </IconButton>
+          </Stack>
+          <Stack direction="row" justifyContent="center" spacing={0.2}>
             <Button
               variant="outlined"
               color="secondary"
+              size="small"
               startIcon={<Add />}
               onClick={() => {
                 addStyles(images[images.length - 1].style);
@@ -98,6 +111,7 @@ const ArtisticPreference: FC = () => {
             <Button
               variant="outlined"
               color="secondary"
+              size="small"
               startIcon={<Add />}
               onClick={() => {
                 addTecniques(images[images.length - 1].technique);
@@ -108,6 +122,7 @@ const ArtisticPreference: FC = () => {
             <Button
               variant="outlined"
               color="secondary"
+              size="small"
               startIcon={<Add />}
               onClick={() => {
                 addThemes(images[images.length - 1].subject);
