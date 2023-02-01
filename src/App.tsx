@@ -13,7 +13,9 @@ const App = () => {
     string | undefined
   >();
 
-  const imageContainer = process.env.CloudFront_Url || process.env.PUBLIC_URL;
+  const imageContainer =
+    process.env.REACT_APP_CloudFront_Url || process.env.PUBLIC_URL;
+  console.log("process.env.NODE_ENV", process.env.NODE_ENV);
   console.log("imageContainerUrl", imageContainer);
   console.log(
     "PUBLIC_URL",
