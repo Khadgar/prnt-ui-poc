@@ -3,6 +3,31 @@ import ArtisticPreference from "./components/ArtisticPreference";
 import AppContext, { ImageMetadata } from "./contexts/AppContext";
 import "./App.css";
 import Preferences from "./components/Preferences";
+import {
+  AppBar,
+  Container,
+  CssBaseline,
+  Stack,
+  Toolbar,
+  Typography,
+  IconButton,
+  Link,
+} from "@mui/material";
+import { GitHub } from "@mui/icons-material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import styled from "styled-components";
+
+const lightTheme = createTheme({
+  palette: {
+    mode: "light",
+  },
+});
+
+const Footer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+`;
 
 const App = () => {
   const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
@@ -15,14 +40,7 @@ const App = () => {
 
   const imageContainer =
     process.env.REACT_APP_CloudFront_Url || process.env.PUBLIC_URL;
-  console.log("process.env.NODE_ENV", process.env.NODE_ENV);
-  console.log("imageContainerUrl", imageContainer);
-  console.log(
-    "PUBLIC_URL",
-    process.env.PUBLIC_URL,
-    "CloudFront_Url",
-    process.env.CloudFront_Url
-  );
+
   useEffect(() => {
     fetch(`${imageContainer}/metadata.json`)
       .then((r) => r.json())
@@ -47,10 +65,54 @@ const App = () => {
         imageContainer,
       }}
     >
-      <div className="App">
-        <ArtisticPreference />
-        <Preferences />
-      </div>
+      <ThemeProvider theme={lightTheme}>
+        <CssBaseline />
+        <Container maxWidth="md">
+          <AppBar position="static" color="primary" enableColorOnDark>
+            <Toolbar>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ flexGrow: 1 }}
+              >
+                PRNT
+              </Typography>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                sx={{ mr: 2 }}
+                onClick={() => {
+                  window.open(
+                    "https://github.com/Khadgar/prnt-ui-poc",
+                    "_blank",
+                    "noreferrer"
+                  );
+                }}
+              >
+                <GitHub />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+
+          <Stack spacing={2}>
+            <ArtisticPreference />
+            <Preferences />
+            <Footer>
+              <Typography color="textSecondary" variant="subtitle1">
+                <Link
+                  href="https://github.com/Khadgar/prnt-ui-poc"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open on GitHub
+                </Link>
+              </Typography>
+            </Footer>
+          </Stack>
+        </Container>
+      </ThemeProvider>
     </AppContext.Provider>
   );
 };

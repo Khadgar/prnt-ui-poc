@@ -1,73 +1,31 @@
 import React, { FC, useContext, useState } from "react";
-import styled from "styled-components";
 import AppContext from "../contexts/AppContext";
-
-const PrecerencesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-const Precerences = styled.div`
-  display: flex;
-`;
-
-const Preference = styled.div`
-  background: #eee;
-  border-radius: 3px 0 0 3px;
-  color: #999;
-  display: inline-block;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 20px 0 23px;
-  position: relative;
-  margin: 0 10px 10px 0;
-  text-decoration: none;
-  -webkit-transition: color 0.2s;
-  &:before {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
-    content: "";
-    height: 6px;
-    left: 10px;
-    position: absolute;
-    width: 6px;
-    top: 10px;
-  }
-  &:after {
-    background: #fff;
-    border-bottom: 13px solid transparent;
-    border-left: 10px solid #eee;
-    border-top: 13px solid transparent;
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-`;
-
-const Button = styled.button`
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 1px solid;
-  border-radius: 3px;
-  cursor: pointer;
-`;
-
-const GenerateButton = styled(Button)`
-  color: #06d6a0;
-  width: 200px;
-  border-color: #26547c;
-`;
+import {
+  Stack,
+  Chip,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  CircularProgress,
+  Alert,
+} from "@mui/material";
 
 const Preferences: FC = () => {
-  const { selectedStyles } = useContext(AppContext);
-  const { selectedTechniques } = useContext(AppContext);
-  const { selectedThemes } = useContext(AppContext);
+  const { selectedStyles, setSelectedStyles } = useContext(AppContext);
+  const { selectedTechniques, setSelectedTechniques } = useContext(AppContext);
+  const { selectedThemes, setSelectedThemes } = useContext(AppContext);
   const { newImageDescription, setNewImageDescription } =
     useContext(AppContext);
   const [result, setResult] = useState<string | undefined>();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+
+  const handleDelete = (from: Array<string>, label: string) => {
+    console.log(label);
+    return from.filter((el) => el !== label);
+  };
 
   const handleGenerate = () => {
     (async () => {
@@ -86,7 +44,12 @@ const Preferences: FC = () => {
         },
         body: JSON.stringify(data),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response.json();
+        })
         .then((data) => {
           setResult(data.image);
           setNewImageDescription(data.imgDescription);
@@ -94,40 +57,94 @@ const Preferences: FC = () => {
         })
         .catch((error) => {
           console.error("Error:", error);
+          setError(error.message);
           setLoading(false);
         });
     })();
   };
-
-  if (loading) return <span>Loading</span>;
+  if (loading) return <CircularProgress />;
+  if (error) return <Alert severity="warning">{error}</Alert>;
 
   return (
-    <PrecerencesContainer>
-      <h2>Your art will have the following properties</h2>
-      <Precerences>
-        {selectedStyles.map((style: string, index: number) => (
-          <Preference key={index}>{style}</Preference>
-        ))}
-      </Precerences>
-      <Precerences>
-        {selectedTechniques.map((style: string, index: number) => (
-          <Preference key={index}>{style}</Preference>
-        ))}
-      </Precerences>
-      <Precerences>
-        {selectedThemes.map((style: string, index: number) => (
-          <Preference key={index}>{style}</Preference>
-        ))}
-      </Precerences>
-      <GenerateButton onClick={handleGenerate}>Generate</GenerateButton>
+    <Stack spacing={2}>
+      <Card>
+        <CardContent>
+          <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+            Selected Preferences
+          </Typography>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            Styles
+          </Typography>
+          <Stack direction="row" spacing={2} flexWrap="wrap">
+            {selectedStyles.map((style: string, index: number) => (
+              <Chip
+                key={index}
+                label={style}
+                onDelete={() => {
+                  setSelectedStyles(handleDelete(selectedStyles, style));
+                }}
+              />
+            ))}
+          </Stack>
 
-      <>{newImageDescription ? newImageDescription : ""}</>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            Techniques
+          </Typography>
+          <Stack direction="row" spacing={1} flexWrap="wrap">
+            {selectedTechniques.map((style: string, index: number) => (
+              <Chip
+                key={index}
+                label={style}
+                onDelete={() => {
+                  setSelectedTechniques(
+                    handleDelete(selectedTechniques, style)
+                  );
+                }}
+              />
+            ))}
+          </Stack>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            Themes
+          </Typography>
+          <Stack direction="row" spacing={2} flexWrap="wrap">
+            {selectedThemes.map((style: string, index: number) => (
+              <Chip
+                key={index}
+                label={style}
+                onDelete={() => {
+                  setSelectedThemes(handleDelete(selectedThemes, style));
+                }}
+              />
+            ))}
+          </Stack>
+        </CardContent>
+        <CardActions>
+          <Button size="small" variant="contained" onClick={handleGenerate}>
+            Generate
+          </Button>
+        </CardActions>
+      </Card>
+
       {result && result.length > 0 ? (
-        <img className="result-image" src={result} alt="result" />
+        <Card>
+          <CardContent>
+            <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+              Generated Image
+            </Typography>
+            <img className="result-image" src={result} alt="result" />
+            <Typography
+              sx={{ fontSize: 14 }}
+              color="text.secondary"
+              gutterBottom
+            >
+              {newImageDescription ? newImageDescription : ""}
+            </Typography>
+          </CardContent>
+        </Card>
       ) : (
         <></>
       )}
-    </PrecerencesContainer>
+    </Stack>
   );
 };
 

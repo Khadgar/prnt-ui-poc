@@ -3,10 +3,6 @@ body {
   padding: 0;
 }
 
-.App {
-  height: 100vh;
-}
-
 .result-image {
   margin-top: 20px;
   width: 256px;
