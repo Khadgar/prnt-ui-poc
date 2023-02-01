@@ -79,7 +79,7 @@ const Preferences: FC = () => {
         technique: selectedTechniques.join(", "),
       };
 
-      fetch("./artistic-preference", {
+      fetch("./.netlify/functions/artistic-preference", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
