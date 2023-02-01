@@ -79,16 +79,13 @@ const Preferences: FC = () => {
         technique: selectedTechniques.join(", "),
       };
 
-      fetch(
-        "https://prnt-server.netlify.app/.netlify/functions/artistic-preference",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      )
+      fetch("./artistic-preference", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
         .then((response) => response.json())
         .then((data) => {
           setResult(data.image);
