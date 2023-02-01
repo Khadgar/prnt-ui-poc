@@ -14,7 +14,13 @@ const App = () => {
   >();
 
   const imageContainer = process.env.CloudFront_Url || process.env.PUBLIC_URL;
-
+  console.log("imageContainerUrl", imageContainer);
+  console.log(
+    "PUBLIC_URL",
+    process.env.PUBLIC_URL,
+    "CloudFront_Url",
+    process.env.CloudFront_Url
+  );
   useEffect(() => {
     fetch(`${imageContainer}/metadata.json`)
       .then((r) => r.json())
