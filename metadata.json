@@ -57,7 +57,7 @@
     "fileName": "images/Rembrandt_1.jpg",
     "style": ["Baroque"],
     "technique": ["oil"],
-    "subject": "martyrdom of Saint Stephen"
+    "subject": ["martyrdom of Saint Stephen"]
   },
   {
     "fileName": "images/Vincent_van_Gogh_1.jpg",
