@@ -8,7 +8,7 @@ import {
   CardContent,
   CardActions,
   Typography,
-  CircularProgress,
+  LinearProgress,
   Alert,
 } from "@mui/material";
 
@@ -62,7 +62,7 @@ const Preferences: FC = () => {
         });
     })();
   };
-  if (loading) return <CircularProgress />;
+  if (loading) return <LinearProgress />;
   if (error) return <Alert severity="warning">{error}</Alert>;
 
   return (
