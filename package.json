@@ -2,7 +2,7 @@
   "name": "prnt-ui-poc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://khadgar.github.io/prnt-ui-poc",
+  "homepage": "https://prnt-ui-poc.netlify.app",
   "dependencies": {
     "@react-spring/web": "^9.5.5",
     "@testing-library/jest-dom": "^5.16.5",
