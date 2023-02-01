@@ -8,6 +8,7 @@ export interface ImageMetadata {
 }
 
 interface IAppContext {
+  imageContainer: string;
   images: ImageMetadata[];
   setImages: React.Dispatch<React.SetStateAction<ImageMetadata[]>>;
   selectedStyles: string[];

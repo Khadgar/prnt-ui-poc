@@ -13,13 +13,15 @@ const App = () => {
     string | undefined
   >();
 
+  const imageContainer = process.env.CloudFront_Url || process.env.PUBLIC_URL;
+
   useEffect(() => {
-    fetch(`${process.env.PUBLIC_URL}/images/metadata.json`)
+    fetch(`${imageContainer}/metadata.json`)
       .then((r) => r.json())
       .then((metadata: ImageMetadata[]) => {
         setImages(metadata);
       });
-  }, [setImages]);
+  }, [imageContainer, setImages]);
 
   return (
     <AppContext.Provider
@@ -34,6 +36,7 @@ const App = () => {
         setImages,
         newImageDescription,
         setNewImageDescription,
+        imageContainer,
       }}
     >
       <div className="App">

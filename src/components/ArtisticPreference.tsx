@@ -62,6 +62,7 @@ const Card = styled.div`
 `;
 
 const ArtisticPreference: FC = () => {
+  const { imageContainer } = useContext(AppContext);
   const { images, setImages } = useContext(AppContext);
 
   const { selectedStyles, setSelectedStyles } = useContext(AppContext);
@@ -99,7 +100,7 @@ const ArtisticPreference: FC = () => {
             <Card
               key={index}
               style={{
-                backgroundImage: `url(${process.env.PUBLIC_URL}/${img.fileName})`,
+                backgroundImage: `url(${imageContainer}/${img.fileName})`,
               }}
             ></Card>
           ))}
