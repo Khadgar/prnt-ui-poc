@@ -131,14 +131,16 @@ const Preferences: FC = () => {
             <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
               Generated Image
             </Typography>
-            <img className="result-image" src={result} alt="result" />
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              {newImageDescription ? newImageDescription : ""}
-            </Typography>
+            <Stack alignItems="center" spacing={2}>
+              <img className="result-image" src={result} alt="result" />
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {newImageDescription ? newImageDescription : ""}
+              </Typography>
+            </Stack>
           </CardContent>
         </Card>
       ) : (
