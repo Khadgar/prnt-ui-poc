@@ -90,12 +90,12 @@ const Preferences: FC = () => {
         .then((data) => {
           setResult(data.image);
           setNewImageDescription(data.imgDescription);
+          setLoading(false);
         })
         .catch((error) => {
           console.error("Error:", error);
+          setLoading(false);
         });
-
-      setLoading(false);
     })();
   };
 
