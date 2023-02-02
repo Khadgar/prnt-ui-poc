@@ -30,8 +30,10 @@ const CustomPreferences: FC = () => {
           size="small"
           value=""
           onChange={(e) => {
-            const newStyles = [...selectedStyles, e.target.value];
-            setSelectedStyles(newStyles);
+            if (!selectedStyles.find((el) => el === e.target.value)) {
+              const newStyles = [...selectedStyles, e.target.value];
+              setSelectedStyles(newStyles);
+            }
           }}
         >
           <MenuItem value="">
@@ -51,8 +53,10 @@ const CustomPreferences: FC = () => {
           size="small"
           value=""
           onChange={(e) => {
-            const newStyles = [...selectedTechniques, e.target.value];
-            setSelectedTechniques(newStyles);
+            if (!selectedTechniques.find((el) => el === e.target.value)) {
+              const newStyles = [...selectedTechniques, e.target.value];
+              setSelectedTechniques(newStyles);
+            }
           }}
         >
           <MenuItem value="">
@@ -72,8 +76,10 @@ const CustomPreferences: FC = () => {
           size="small"
           value=""
           onChange={(e) => {
-            const newStyles = [...selectedThemes, e.target.value];
-            setSelectedThemes(newStyles);
+            if (!selectedThemes.find((el) => el === e.target.value)) {
+              const newStyles = [...selectedThemes, e.target.value];
+              setSelectedThemes(newStyles);
+            }
           }}
         >
           <MenuItem value="">
