@@ -10,14 +10,7 @@ import {
   Typography,
   LinearProgress,
   Alert,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  Divider,
 } from "@mui/material";
-import { styles, subjects, techiques } from "../data/constants";
 import CustomPreferences from "./CustomPreferences";
 import ResultCard from "./ResultCard";
 
