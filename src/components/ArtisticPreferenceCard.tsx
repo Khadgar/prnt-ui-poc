@@ -1,35 +1,12 @@
-import { FC, useContext } from "react";
-import styled from "styled-components";
-import AppContext, { ImageMetadata } from "../contexts/AppContext";
+import React, { FC, useContext } from "react";
+import AppContext from "../contexts/AppContext";
 import { arrayRotate } from "../utils/Utils";
 import { Stack, Button, Card, CardContent, IconButton } from "@mui/material";
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Add } from "@mui/icons-material";
+import PictureCards from "./PictureCards";
 
-const CARD_HEIGHT = 300;
-const CARD_WIDTH = 260;
-
-const ArtisticPreferenceWrapper = styled(Stack)`
-  height: ${CARD_HEIGHT}px;
-`;
-
-const CardContainer = styled(Stack)`
-  height: 100%;
-`;
-
-const ImageCard = styled.div`
-  position: relative;
-  background-color: #fff;
-  width: ${CARD_WIDTH}px;
-  height: ${CARD_HEIGHT}px;
-  border-radius: 10px;
-  background-size: cover;
-  background-position: center;
-  margin-bottom: -${CARD_HEIGHT}px;
-`;
-
-const ArtisticPreference: FC = () => {
-  const { imageContainer } = useContext(AppContext);
+const ArtisticPreferenceCard: FC = () => {
   const { images, setImages } = useContext(AppContext);
 
   const { selectedStyles, setSelectedStyles } = useContext(AppContext);
@@ -62,22 +39,7 @@ const ArtisticPreference: FC = () => {
     <Card>
       <CardContent>
         <Stack spacing={2}>
-          <ArtisticPreferenceWrapper
-            spacing={2}
-            alignItems="center"
-            justifyContent="center"
-          >
-            <CardContainer direction="column">
-              {images.map((img: ImageMetadata, index: number) => (
-                <ImageCard
-                  key={index}
-                  style={{
-                    backgroundImage: `url(${imageContainer}/${img.fileName})`,
-                  }}
-                ></ImageCard>
-              ))}
-            </CardContainer>
-          </ArtisticPreferenceWrapper>
+          <PictureCards images={images} />
           <Stack direction="row" justifyContent="center" spacing={2}>
             <IconButton
               edge="start"
@@ -137,4 +99,4 @@ const ArtisticPreference: FC = () => {
   );
 };
 
-export default ArtisticPreference;
+export default ArtisticPreferenceCard;

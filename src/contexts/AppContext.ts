@@ -21,6 +21,8 @@ interface IAppContext {
   setNewImageDescription: React.Dispatch<
     React.SetStateAction<string | undefined>
   >;
+  newImageUrl: string | undefined;
+  setNewImageUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

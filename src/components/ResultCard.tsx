@@ -1,12 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import { Card, CardContent, Stack, Typography } from "@mui/material";
+import AppContext from "../contexts/AppContext";
 
 interface ResultCardProps {
-  imageUrl: string;
+  imageUrl: string | undefined;
   imageDescription: string | undefined;
 }
 
 const ResultCard: FC<ResultCardProps> = ({ imageUrl, imageDescription }) => {
+  const { newImageUrl } = useContext(AppContext);
+
+  if (!newImageUrl) {
+    return <></>;
+  }
   return (
     <Card>
       <CardContent>
@@ -19,7 +25,7 @@ const ResultCard: FC<ResultCardProps> = ({ imageUrl, imageDescription }) => {
           Generated Image
         </Typography>
         <Stack alignItems="center" spacing={2}>
-          <img className="result-image" src={imageUrl} alt="result" />
+          <img className="result-image" src={newImageUrl} alt="result" />
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             {imageDescription ? imageDescription : ""}
           </Typography>

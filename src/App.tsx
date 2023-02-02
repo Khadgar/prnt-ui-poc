@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import ArtisticPreference from "./components/ArtisticPreference";
 import AppContext, { ImageMetadata } from "./contexts/AppContext";
 import "./App.css";
-import Preferences from "./components/Preferences";
 import {
   AppBar,
   Container,
@@ -16,6 +14,9 @@ import {
 import { GitHub } from "@mui/icons-material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import styled from "styled-components";
+import ResultCard from "./components/ResultCard";
+import ArtisticPreferenceCard from "./components/ArtisticPreferenceCard";
+import PreferencesCard from "./components/PreferencesCard";
 
 const lightTheme = createTheme({
   palette: {
@@ -37,6 +38,7 @@ const App = () => {
   const [newImageDescription, setNewImageDescription] = useState<
     string | undefined
   >();
+  const [newImageUrl, setNewImageUrl] = useState<string | undefined>();
 
   const imageContainer =
     process.env.REACT_APP_CloudFront_Url || process.env.PUBLIC_URL;
@@ -63,6 +65,8 @@ const App = () => {
         newImageDescription,
         setNewImageDescription,
         imageContainer,
+        newImageUrl,
+        setNewImageUrl,
       }}
     >
       <ThemeProvider theme={lightTheme}>
@@ -97,8 +101,12 @@ const App = () => {
           </AppBar>
 
           <Stack spacing={2}>
-            <ArtisticPreference />
-            <Preferences />
+            <ArtisticPreferenceCard />
+            <PreferencesCard />
+            <ResultCard
+              imageDescription={newImageDescription}
+              imageUrl={newImageUrl}
+            />
             <Footer>
               <Typography color="textSecondary" variant="subtitle1">
                 <Link
