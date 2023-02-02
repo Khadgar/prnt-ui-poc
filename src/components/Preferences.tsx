@@ -10,7 +10,16 @@ import {
   Typography,
   LinearProgress,
   Alert,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  Divider,
 } from "@mui/material";
+import { styles, subjects, techiques } from "../data/constants";
+import CustomPreferences from "./CustomPreferences";
+import ResultCard from "./ResultCard";
 
 const Preferences: FC = () => {
   const { selectedStyles, setSelectedStyles } = useContext(AppContext);
@@ -23,7 +32,6 @@ const Preferences: FC = () => {
   const [error, setError] = useState<string | undefined>();
 
   const handleDelete = (from: Array<string>, label: string) => {
-    console.log(label);
     return from.filter((el) => el !== label);
   };
 
@@ -62,6 +70,7 @@ const Preferences: FC = () => {
         });
     })();
   };
+
   if (loading) return <LinearProgress />;
   if (error) return <Alert severity="warning">{error}</Alert>;
 
@@ -69,54 +78,57 @@ const Preferences: FC = () => {
     <Stack spacing={2}>
       <Card>
         <CardContent>
-          <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
+          <Typography paragraph sx={{ fontSize: 20 }} color="text.primary">
             Selected Preferences
           </Typography>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          <Typography sx={{ fontSize: 14 }} color="text.secondary">
             Styles
           </Typography>
-          <Stack direction="row" spacing={2} flexWrap="wrap">
-            {selectedStyles.map((style: string, index: number) => (
-              <Chip
-                key={index}
-                label={style}
-                onDelete={() => {
-                  setSelectedStyles(handleDelete(selectedStyles, style));
-                }}
-              />
-            ))}
-          </Stack>
+          <Stack spacing={2}>
+            <Stack direction="row" spacing={2} flexWrap="wrap">
+              {selectedStyles.map((style: string, index: number) => (
+                <Chip
+                  key={index}
+                  label={style}
+                  onDelete={() => {
+                    setSelectedStyles(handleDelete(selectedStyles, style));
+                  }}
+                />
+              ))}
+            </Stack>
 
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Techniques
-          </Typography>
-          <Stack direction="row" spacing={1} flexWrap="wrap">
-            {selectedTechniques.map((style: string, index: number) => (
-              <Chip
-                key={index}
-                label={style}
-                onDelete={() => {
-                  setSelectedTechniques(
-                    handleDelete(selectedTechniques, style)
-                  );
-                }}
-              />
-            ))}
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              Techniques
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap">
+              {selectedTechniques.map((style: string, index: number) => (
+                <Chip
+                  key={index}
+                  label={style}
+                  onDelete={() => {
+                    setSelectedTechniques(
+                      handleDelete(selectedTechniques, style)
+                    );
+                  }}
+                />
+              ))}
+            </Stack>
+            <Typography sx={{ fontSize: 14 }} color="text.secondary">
+              Themes
+            </Typography>
+            <Stack direction="row" spacing={2} flexWrap="wrap">
+              {selectedThemes.map((style: string, index: number) => (
+                <Chip
+                  key={index}
+                  label={style}
+                  onDelete={() => {
+                    setSelectedThemes(handleDelete(selectedThemes, style));
+                  }}
+                />
+              ))}
+            </Stack>
           </Stack>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Themes
-          </Typography>
-          <Stack direction="row" spacing={2} flexWrap="wrap">
-            {selectedThemes.map((style: string, index: number) => (
-              <Chip
-                key={index}
-                label={style}
-                onDelete={() => {
-                  setSelectedThemes(handleDelete(selectedThemes, style));
-                }}
-              />
-            ))}
-          </Stack>
+          <CustomPreferences />
         </CardContent>
         <CardActions>
           <Button size="small" variant="contained" onClick={handleGenerate}>
@@ -126,23 +138,7 @@ const Preferences: FC = () => {
       </Card>
 
       {result && result.length > 0 ? (
-        <Card>
-          <CardContent>
-            <Typography sx={{ fontSize: 20 }} color="text.primary" gutterBottom>
-              Generated Image
-            </Typography>
-            <Stack alignItems="center" spacing={2}>
-              <img className="result-image" src={result} alt="result" />
-              <Typography
-                sx={{ fontSize: 14 }}
-                color="text.secondary"
-                gutterBottom
-              >
-                {newImageDescription ? newImageDescription : ""}
-              </Typography>
-            </Stack>
-          </CardContent>
-        </Card>
+        <ResultCard imageDescription={newImageDescription} imageUrl={result} />
       ) : (
         <></>
       )}
