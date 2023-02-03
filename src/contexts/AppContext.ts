@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 export interface ImageMetadata {
   fileName: string;
@@ -8,7 +8,7 @@ export interface ImageMetadata {
 }
 
 interface IAppContext {
-  imageContainer: string;
+  imageContainer: string | undefined;
   images: ImageMetadata[];
   setImages: React.Dispatch<React.SetStateAction<ImageMetadata[]>>;
   selectedStyles: string[];
@@ -18,9 +18,7 @@ interface IAppContext {
   selectedThemes: string[];
   setSelectedThemes: React.Dispatch<React.SetStateAction<string[]>>;
   newImageDescription: string | undefined;
-  setNewImageDescription: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >;
+  setNewImageDescription: React.Dispatch<React.SetStateAction<string | undefined>>;
   newImageUrl: string | undefined;
   setNewImageUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
 }

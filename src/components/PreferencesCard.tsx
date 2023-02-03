@@ -1,18 +1,18 @@
-import React, { FC, useContext, useState } from "react";
-import AppContext from "../contexts/AppContext";
 import {
-  Stack,
-  Chip,
-  Button,
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
   LinearProgress,
   Alert,
-} from "@mui/material";
-import axios from "axios";
-import CustomPreferences from "./CustomPreferences";
+  Card,
+  CardContent,
+  Typography,
+  Stack,
+  Chip,
+  CardActions,
+  Button,
+} from '@mui/material';
+import axios from 'axios';
+import React, { FC, useContext, useState } from 'react';
+import AppContext from '../contexts/AppContext';
+import CustomPreferences from './CustomPreferences';
 
 const PreferencesCard: FC = () => {
   const { selectedStyles, setSelectedStyles } = useContext(AppContext);
@@ -32,14 +32,14 @@ const PreferencesCard: FC = () => {
     setLoading(true);
 
     const data = {
-      style: selectedStyles.join(", "),
-      subject: selectedThemes.join(", "),
-      technique: selectedTechniques.join(", "),
+      style: selectedStyles.join(', '),
+      subject: selectedThemes.join(', '),
+      technique: selectedTechniques.join(', '),
     };
 
     axios
-      .post("./.netlify/functions/artistic-preference", JSON.stringify(data), {
-        headers: { "Content-Type": "application/json" },
+      .post('./.netlify/functions/artistic-preference', JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
       })
       .then((response) => {
         setNewImageUrl(response.data.image);
@@ -47,12 +47,10 @@ const PreferencesCard: FC = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        debugger;
+        console.error('Error:', error);
         if (error.response && error.response.data) {
-          setError(
-            error.response.data.errorMessage ||
-              error.response.data.error.message
-          );
+          setError(error.response.data.errorMessage || error.response.data.error.message);
         }
 
         setLoading(false);
@@ -93,9 +91,7 @@ const PreferencesCard: FC = () => {
                 key={index}
                 label={style}
                 onDelete={() => {
-                  setSelectedTechniques(
-                    handleDelete(selectedTechniques, style)
-                  );
+                  setSelectedTechniques(handleDelete(selectedTechniques, style));
                 }}
               />
             ))}

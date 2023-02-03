@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import AppContext, { ImageMetadata } from "./contexts/AppContext";
-import "./App.css";
+import './App.css';
+import { GitHub } from '@mui/icons-material';
 import {
   AppBar,
   Container,
@@ -10,17 +9,18 @@ import {
   Typography,
   IconButton,
   Link,
-} from "@mui/material";
-import { GitHub } from "@mui/icons-material";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import styled from "styled-components";
-import ResultCard from "./components/ResultCard";
-import ArtisticPreferenceCard from "./components/ArtisticPreferenceCard";
-import PreferencesCard from "./components/PreferencesCard";
+} from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import ArtisticPreferenceCard from './components/ArtisticPreferenceCard';
+import PreferencesCard from './components/PreferencesCard';
+import ResultCard from './components/ResultCard';
+import AppContext, { ImageMetadata } from './contexts/AppContext';
 
 const lightTheme = createTheme({
   palette: {
-    mode: "light",
+    mode: 'light',
   },
 });
 
@@ -35,13 +35,10 @@ const App = () => {
   const [selectedTechniques, setSelectedTechniques] = useState<string[]>([]);
   const [selectedThemes, setSelectedThemes] = useState<string[]>([]);
   const [images, setImages] = useState<ImageMetadata[]>([]);
-  const [newImageDescription, setNewImageDescription] = useState<
-    string | undefined
-  >();
+  const [newImageDescription, setNewImageDescription] = useState<string | undefined>();
   const [newImageUrl, setNewImageUrl] = useState<string | undefined>();
 
-  const imageContainer =
-    process.env.REACT_APP_CloudFront_Url || process.env.PUBLIC_URL;
+  const imageContainer = process.env.REACT_APP_CloudFront_Url || process.env.PUBLIC_URL;
 
   useEffect(() => {
     fetch(`${imageContainer}/metadata.json`)
@@ -74,12 +71,7 @@ const App = () => {
         <Container maxWidth="md">
           <AppBar position="static" color="primary" enableColorOnDark>
             <Toolbar>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ flexGrow: 1 }}
-              >
+              <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                 PRNT
               </Typography>
               <IconButton
@@ -88,11 +80,7 @@ const App = () => {
                 aria-label="menu"
                 sx={{ mr: 2 }}
                 onClick={() => {
-                  window.open(
-                    "https://github.com/Khadgar/prnt-ui-poc",
-                    "_blank",
-                    "noreferrer"
-                  );
+                  window.open('https://github.com/Khadgar/prnt-ui-poc', '_blank', 'noreferrer');
                 }}
               >
                 <GitHub />
@@ -103,10 +91,7 @@ const App = () => {
           <Stack spacing={2}>
             <ArtisticPreferenceCard />
             <PreferencesCard />
-            <ResultCard
-              imageDescription={newImageDescription}
-              imageUrl={newImageUrl}
-            />
+            <ResultCard />
             <Footer>
               <Typography color="textSecondary" variant="subtitle1">
                 <Link

@@ -1,13 +1,7 @@
-import React, { FC, useContext } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
-import AppContext from "../contexts/AppContext";
-import { styles, subjects, techiques } from "../data/constants";
+import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import React, { FC, useContext } from 'react';
+import AppContext from '../contexts/AppContext';
+import { styles, subjects, techiques } from '../data/constants';
 
 const CustomPreferences: FC = () => {
   const { selectedStyles, setSelectedStyles } = useContext(AppContext);
@@ -16,11 +10,7 @@ const CustomPreferences: FC = () => {
 
   return (
     <>
-      <Typography
-        paragraph
-        sx={{ fontSize: 20, marginTop: "16px" }}
-        color="text.primary"
-      >
+      <Typography paragraph sx={{ fontSize: 20, marginTop: '16px' }} color="text.primary">
         Custom Preferences
       </Typography>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
