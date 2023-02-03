@@ -37,10 +37,10 @@ const handler: Handler = async (
       statusCode: 200,
       body: JSON.stringify({ imgDescription, image: image.data.data[0].url }),
     };
-  } catch (error: any) {
+  } catch (error) {
     return {
       statusCode: 500,
-      body: error.message,
+      body: JSON.stringify(error.response.data),
     };
   }
 };

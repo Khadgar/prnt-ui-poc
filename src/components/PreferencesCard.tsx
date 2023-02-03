@@ -51,7 +51,7 @@ const PreferencesCard: FC = () => {
         if (error.response && error.response.data) {
           setError(
             error.response.data.errorMessage ||
-              JSON.stringify(error.response.data)
+              error.response.data.error.message
           );
         }
 
