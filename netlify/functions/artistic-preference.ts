@@ -40,7 +40,9 @@ const handler: Handler = async (
   } catch (error) {
     return {
       statusCode: 500,
-      body: JSON.stringify(error.response.data),
+      body: JSON.stringify(
+        error.response?.data || { error: { message: error.message } }
+      ),
     };
   }
 };
