@@ -48,7 +48,13 @@ const PreferencesCard: FC = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        setError(error.response.data);
+        if (error.response && error.response.data) {
+          setError(
+            error.response.data.errorMessage ||
+              JSON.stringify(error.response.data)
+          );
+        }
+
         setLoading(false);
       });
   };
