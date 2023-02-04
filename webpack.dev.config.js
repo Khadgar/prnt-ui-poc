@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -9,7 +8,7 @@ const Dotenv = require('dotenv-webpack');
 module.exports = {
   mode: 'development',
   output: {
-    publicPath: '/public',
+    publicPath: '/',
   },
   entry: './src/index.tsx',
   module: {
@@ -40,10 +39,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
-      favicon: 'public/favicon.ico',
+      template: path.join(__dirname, 'public', 'index.html'),
+      favicon: path.join(__dirname, 'public', 'favicon.ico'),
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),
@@ -58,7 +56,9 @@ module.exports = {
     topLevelAwait: true,
   },
   devServer: {
-    static: path.join(__dirname, 'build'),
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
     historyApiFallback: true,
     port: 3000,
     open: true,
