@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 export interface ImageMetadata {
   fileName: string;
@@ -18,11 +18,13 @@ interface IAppContext {
   selectedThemes: string[];
   setSelectedThemes: React.Dispatch<React.SetStateAction<string[]>>;
   newImageDescription: string | undefined;
-  setNewImageDescription: React.Dispatch<
-    React.SetStateAction<string | undefined>
-  >;
+  setNewImageDescription: React.Dispatch<React.SetStateAction<string | undefined>>;
   newImageUrl: string | undefined;
   setNewImageUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  error: string | undefined;
+  setError: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

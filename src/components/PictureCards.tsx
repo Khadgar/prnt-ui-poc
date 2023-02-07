@@ -1,7 +1,7 @@
-import React, { FC, useContext } from "react";
-import { Stack } from "@mui/material";
-import styled from "styled-components";
-import AppContext, { ImageMetadata } from "../contexts/AppContext";
+import React, { FC, useContext } from 'react';
+import { Stack } from '@mui/material';
+import styled from 'styled-components';
+import AppContext, { ImageMetadata } from '../contexts/AppContext';
 
 const CARD_HEIGHT = 300;
 const CARD_WIDTH = 260;
@@ -32,11 +32,7 @@ interface PictureCardsProps {
 const PictureCards: FC<PictureCardsProps> = ({ images }) => {
   const { imageContainer } = useContext(AppContext);
   return (
-    <PictureCardsWrapper
-      spacing={2}
-      alignItems="center"
-      justifyContent="center"
-    >
+    <PictureCardsWrapper spacing={2} alignItems="center" justifyContent="center">
       <CardContainer direction="column">
         {images.map((img: ImageMetadata, index: number) => (
           <ImageCard

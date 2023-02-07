@@ -1,10 +1,9 @@
-import React, { FC, useContext } from "react";
-import AppContext from "../contexts/AppContext";
-import { arrayRotate } from "../utils/Utils";
-import { Stack, Button, Card, CardContent, IconButton } from "@mui/material";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Add } from "@mui/icons-material";
-import PictureCards from "./PictureCards";
+import React, { FC, useContext } from 'react';
+import { ArrowBack, ArrowForward, Add } from '@mui/icons-material';
+import { Stack, Button, Card, CardContent, IconButton } from '@mui/material';
+import AppContext from '../contexts/AppContext';
+import { arrayRotate } from '../utils/Utils';
+import PictureCards from './PictureCards';
 
 const ArtisticPreferenceCard: FC = () => {
   const { images, setImages } = useContext(AppContext);
@@ -41,20 +40,10 @@ const ArtisticPreferenceCard: FC = () => {
         <Stack spacing={2}>
           <PictureCards images={images} />
           <Stack direction="row" justifyContent="center" spacing={2}>
-            <IconButton
-              edge="start"
-              color="inherit"
-              sx={{ mr: 2 }}
-              onClick={showPrevArt}
-            >
+            <IconButton edge="start" color="inherit" sx={{ mr: 2 }} onClick={showPrevArt}>
               <ArrowBack />
             </IconButton>
-            <IconButton
-              edge="start"
-              color="inherit"
-              sx={{ mr: 2 }}
-              onClick={showNextArt}
-            >
+            <IconButton edge="start" color="inherit" sx={{ mr: 2 }} onClick={showNextArt}>
               <ArrowForward />
             </IconButton>
           </Stack>

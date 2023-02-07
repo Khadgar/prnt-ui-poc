@@ -1,18 +1,8 @@
-import React, { FC, useContext, useState } from "react";
-import AppContext from "../contexts/AppContext";
-import {
-  Stack,
-  Chip,
-  Button,
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  LinearProgress,
-  Alert,
-} from "@mui/material";
-import axios from "axios";
-import CustomPreferences from "./CustomPreferences";
+import React, { FC, useContext } from 'react';
+import { Card, CardContent, Typography, Stack, Chip, CardActions, Button } from '@mui/material';
+import axios from 'axios';
+import AppContext from '../contexts/AppContext';
+import CustomPreferences from './CustomPreferences';
 
 const PreferencesCard: FC = () => {
   const { selectedStyles, setSelectedStyles } = useContext(AppContext);
@@ -21,8 +11,8 @@ const PreferencesCard: FC = () => {
   const { setNewImageDescription } = useContext(AppContext);
   const { setNewImageUrl } = useContext(AppContext);
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>();
+  const { setLoading } = useContext(AppContext);
+  const { setError } = useContext(AppContext);
 
   const handleDelete = (from: Array<string>, label: string) => {
     return from.filter((el) => el !== label);
@@ -32,35 +22,30 @@ const PreferencesCard: FC = () => {
     setLoading(true);
 
     const data = {
-      style: selectedStyles.join(", "),
-      subject: selectedThemes.join(", "),
-      technique: selectedTechniques.join(", "),
+      style: selectedStyles.join(', '),
+      subject: selectedThemes.join(', '),
+      technique: selectedTechniques.join(', '),
     };
 
     axios
-      .post("./.netlify/functions/artistic-preference", JSON.stringify(data), {
-        headers: { "Content-Type": "application/json" },
+      .post('./.netlify/functions/artistic-preference', JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
       })
       .then((response) => {
         setNewImageUrl(response.data.image);
         setNewImageDescription(response.data.imgDescription);
         setLoading(false);
+        setError(undefined);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error('Error:', error);
         if (error.response && error.response.data) {
-          setError(
-            error.response.data.errorMessage ||
-              error.response.data.error.message
-          );
+          setError(error.response.data.errorMessage || error.response.data.error.message);
         }
 
         setLoading(false);
       });
   };
-
-  if (loading) return <LinearProgress />;
-  if (error) return <Alert severity="warning">{error}</Alert>;
 
   return (
     <Card>
@@ -93,9 +78,7 @@ const PreferencesCard: FC = () => {
                 key={index}
                 label={style}
                 onDelete={() => {
-                  setSelectedTechniques(
-                    handleDelete(selectedTechniques, style)
-                  );
+                  setSelectedTechniques(handleDelete(selectedTechniques, style));
                 }}
               />
             ))}
