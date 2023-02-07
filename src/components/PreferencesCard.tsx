@@ -2,6 +2,7 @@ import React, { FC, useContext } from 'react';
 import { Card, CardContent, Typography, Stack, Chip, CardActions, Button } from '@mui/material';
 import axios from 'axios';
 import AppContext from '../contexts/AppContext';
+import { getErrorMessageFromResponse } from '../utils/Utils';
 import CustomPreferences from './CustomPreferences';
 
 const PreferencesCard: FC = () => {
@@ -39,8 +40,8 @@ const PreferencesCard: FC = () => {
       })
       .catch((error) => {
         console.error('Error:', error);
-        if (error.response && error.response.data) {
-          setError(error.response.data.errorMessage || error.response.data.error.message);
+        if (error.response) {
+          setError(getErrorMessageFromResponse(error.response));
         }
 
         setLoading(false);
