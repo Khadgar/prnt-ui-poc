@@ -35,6 +35,7 @@ const PreferencesCard: FC = () => {
         setNewImageUrl(response.data.image);
         setNewImageDescription(response.data.imgDescription);
         setLoading(false);
+        setError(undefined);
       })
       .catch((error) => {
         console.error('Error:', error);
