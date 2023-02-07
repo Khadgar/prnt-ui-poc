@@ -1,5 +1,5 @@
-import { Stack } from '@mui/material';
 import React, { FC, useContext } from 'react';
+import { Stack } from '@mui/material';
 import styled from 'styled-components';
 import AppContext, { ImageMetadata } from '../contexts/AppContext';
 

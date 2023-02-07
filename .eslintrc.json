@@ -17,10 +17,14 @@
     "import/order": [
       "error",
       {
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        }
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "builtin",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"]
       }
     ],
     "@typescript-eslint/no-explicit-any": "off",

@@ -1,16 +1,6 @@
-import {
-  LinearProgress,
-  Alert,
-  Card,
-  CardContent,
-  Typography,
-  Stack,
-  Chip,
-  CardActions,
-  Button,
-} from '@mui/material';
+import React, { FC, useContext } from 'react';
+import { Card, CardContent, Typography, Stack, Chip, CardActions, Button } from '@mui/material';
 import axios from 'axios';
-import React, { FC, useContext, useState } from 'react';
 import AppContext from '../contexts/AppContext';
 import CustomPreferences from './CustomPreferences';
 
@@ -21,8 +11,8 @@ const PreferencesCard: FC = () => {
   const { setNewImageDescription } = useContext(AppContext);
   const { setNewImageUrl } = useContext(AppContext);
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>();
+  const { setLoading } = useContext(AppContext);
+  const { setError } = useContext(AppContext);
 
   const handleDelete = (from: Array<string>, label: string) => {
     return from.filter((el) => el !== label);
@@ -47,7 +37,6 @@ const PreferencesCard: FC = () => {
         setLoading(false);
       })
       .catch((error) => {
-        debugger;
         console.error('Error:', error);
         if (error.response && error.response.data) {
           setError(error.response.data.errorMessage || error.response.data.error.message);
@@ -56,9 +45,6 @@ const PreferencesCard: FC = () => {
         setLoading(false);
       });
   };
-
-  if (loading) return <LinearProgress />;
-  if (error) return <Alert severity="warning">{error}</Alert>;
 
   return (
     <Card>

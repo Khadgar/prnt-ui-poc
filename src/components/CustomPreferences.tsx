@@ -1,5 +1,5 @@
-import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import React, { FC, useContext } from 'react';
+import { FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import AppContext from '../contexts/AppContext';
 import { styles, subjects, techiques } from '../data/constants';
 

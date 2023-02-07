@@ -1,5 +1,5 @@
-import { Card, CardContent, Stack, Typography } from '@mui/material';
 import React, { FC, useContext } from 'react';
+import { Card, CardContent, Stack, Typography } from '@mui/material';
 import AppContext from '../contexts/AppContext';
 
 const ResultCard: FC = () => {

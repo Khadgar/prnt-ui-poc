@@ -1,18 +1,17 @@
 import './App.css';
-import { GitHub } from '@mui/icons-material';
+import React, { useEffect, useState } from 'react';
 import {
+  Alert,
   AppBar,
   Container,
   CssBaseline,
+  LinearProgress,
   Stack,
   Toolbar,
   Typography,
-  IconButton,
-  Link,
 } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import axios from 'axios';
 import ArtisticPreferenceCard from './components/ArtisticPreferenceCard';
 import PreferencesCard from './components/PreferencesCard';
 import ResultCard from './components/ResultCard';
@@ -24,12 +23,6 @@ const lightTheme = createTheme({
   },
 });
 
-const Footer = styled.div`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-`;
-
 const App = () => {
   const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
   const [selectedTechniques, setSelectedTechniques] = useState<string[]>([]);
@@ -37,15 +30,15 @@ const App = () => {
   const [images, setImages] = useState<ImageMetadata[]>([]);
   const [newImageDescription, setNewImageDescription] = useState<string | undefined>();
   const [newImageUrl, setNewImageUrl] = useState<string | undefined>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
 
   const imageContainer = process.env.REACT_APP_CloudFront_Url || process.env.PUBLIC_URL;
 
   useEffect(() => {
-    fetch(`${imageContainer}/metadata.json`)
-      .then((r) => r.json())
-      .then((metadata: ImageMetadata[]) => {
-        setImages(metadata);
-      });
+    axios.get(`${imageContainer}/metadata.json`).then((response) => {
+      setImages(response.data);
+    });
   }, [imageContainer, setImages]);
 
   return (
@@ -64,6 +57,10 @@ const App = () => {
         imageContainer,
         newImageUrl,
         setNewImageUrl,
+        loading,
+        setLoading,
+        error,
+        setError,
       }}
     >
       <ThemeProvider theme={lightTheme}>
@@ -74,35 +71,15 @@ const App = () => {
               <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                 PRNT
               </Typography>
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                onClick={() => {
-                  window.open('https://github.com/Khadgar/prnt-ui-poc', '_blank', 'noreferrer');
-                }}
-              >
-                <GitHub />
-              </IconButton>
             </Toolbar>
           </AppBar>
 
           <Stack spacing={2}>
             <ArtisticPreferenceCard />
+            {loading && <LinearProgress />}
+            {error && <Alert severity="warning">{error}</Alert>}
             <PreferencesCard />
             <ResultCard />
-            <Footer>
-              <Typography color="textSecondary" variant="subtitle1">
-                <Link
-                  href="https://github.com/Khadgar/prnt-ui-poc"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open on GitHub
-                </Link>
-              </Typography>
-            </Footer>
           </Stack>
         </Container>
       </ThemeProvider>
