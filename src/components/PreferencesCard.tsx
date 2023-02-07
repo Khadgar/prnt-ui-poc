@@ -12,7 +12,7 @@ const PreferencesCard: FC = () => {
   const { setNewImageDescription } = useContext(AppContext);
   const { setNewImageUrl } = useContext(AppContext);
 
-  const { setLoading } = useContext(AppContext);
+  const { loading, setLoading } = useContext(AppContext);
   const { setError } = useContext(AppContext);
 
   const handleDelete = (from: Array<string>, label: string) => {
@@ -102,7 +102,7 @@ const PreferencesCard: FC = () => {
         <CustomPreferences />
       </CardContent>
       <CardActions>
-        <Button size="small" variant="contained" onClick={handleGenerate}>
+        <Button disabled={loading} size="small" variant="contained" onClick={handleGenerate}>
           Generate
         </Button>
       </CardActions>
