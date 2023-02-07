@@ -77,6 +77,8 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
     new NodePolyfillPlugin(),
-    new Dotenv(),
+    new Dotenv({
+      systemvars: true,
+    }),
   ],
 };
